@@ -14,11 +14,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
-          name: myapp-ubuntu-latest
+          name: rust-compiler-ubuntu-latest
           path: ./linux
       - uses: actions/download-artifact@v4
         with:
-          name: myapp-windows-latest
+          name: rust-compiler-windows-latest
           path: ./windows
       - name: Create Release
         uses: softprops/action-gh-release@v1
