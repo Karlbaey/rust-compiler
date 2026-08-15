@@ -1,0 +1,39 @@
+name: Build Rust
+
+on:
+  push:
+    branches: [ master ]
+    tags:
+      - 'v*'
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    name: Build for ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@v6
+    
+      - name: Setup Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+    
+      - name: Build release binary
+        run: cargo build --release
+        
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.repository.name }}-${{ matrix.os }}
+          path: target/release/myapp*
+      
+    
